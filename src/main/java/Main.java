@@ -40,6 +40,7 @@ public class Main {
 
   public static void main(String[] args) {
 
+
     port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
 
@@ -86,6 +87,8 @@ public class Main {
     }, new FreeMarkerEngine());
 
 
+
+
     get("/assets", (req, res) -> {
       Connection connection = null;
       Map<String, Object> attributes = new HashMap<>();
@@ -93,16 +96,16 @@ public class Main {
         connection = DatabaseUrl.extract().getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-        stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-        ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
+        ResultSet rs = stmt.executeQuery("SELECT * FROM assets");
+        
         ArrayList<String> output = new ArrayList<String>();
-        while (rs.next()) {
-          output.add( "Read from DB: " + rs.getTimestamp("tick"));
-        }
-
-        attributes.put("results", output);
+          while (rs.next()) { 
+           output.add(rs.getString("assetName"));
+           output.add(rs.getString("type"));
+           output.add(rs.getString("serialNumber"));
+          }
+        
+        attributes.put("assets", output);
         return new ModelAndView(attributes, "assets.ftl");
       } catch (Exception e) {
         attributes.put("message", "There was an error: " + e);
@@ -110,54 +113,13 @@ public class Main {
       } finally {
         if (connection != null) try{connection.close();} catch(SQLException e){}
       }
-    }, new FreeMarkerEngine());
+    }, new FreeMarkerEngine()
+    ); 
 
 
 
-      get("/users", (req, res) -> {
-	    Connection connection = null;
-    	res.type("application/json");
-      	res.header("Access-Control-Allow-Origin", "http://wicked.herokuapp.com");
-      	res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-      	res.header("Access-Control-Allow-Headers", "Content-Type");
-      
-      Map<String, Object> attributes = new HashMap<>();
-      try {
-        
-        connection = DatabaseUrl.extract().getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-        
-        List<JSONObject> resList = new ArrayList<JSONObject>();
-        
-        ResultSetMetaData rsMeta = rs.getMetaData();
-        int columnCnt = rsMeta.getColumnCount();
-        List<String> columnNames = new ArrayList<String>();
-        
-        for(int i=1;i<=columnCnt;i++) {
-            columnNames.add(rsMeta.getColumnName(i).toUpperCase());
-        }
-        
-        
-        while(rs.next()) {
-            JSONObject obj = new JSONObject();
-            for(int i=1;i<=columnCnt;i++) {
-                String key = columnNames.get(i - 1);
-                String value = rs.getString(i);
-                obj.put(key, value);
-            }
-            resList.add(obj);
-        }
-        return resList;
-          
-        } catch (Exception e) {
-          attributes.put("message", "There was an error: " + e);
-          return attributes;
-        
-        } finally {
-          if (connection != null) try{connection.close();} catch(SQLException e){}
-        }
-      });
+
+
 
   }
 

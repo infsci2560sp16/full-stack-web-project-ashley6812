@@ -146,46 +146,27 @@
                       <div class="ibox-content">
                         <div class="row"></div>
                         <div class="table-responsive">
-                        
-                        
-                        
-<table id="tblGrid" style="table-layout: inherit; border-bottom: 1 px;">
-      <tr>
-        <td>Name</td>
-        <td>Role</td>
-        <td>Email</td>
-      </tr>
-      <tr>
-        <td><input type="text" name="t1" /></td>
-        <td><input type="text" name="t2" /></td>
-        <td><input type="text" name="t3" /><input type="button" value="Delete" onClick="removeRow(this);" /></td>
-      </tr>
-      <tr>
-        <td><input type="text" name="t1" /></td>
-        <td><input type="text" name="t2" /></td>
-        <td><input type="text" name="t3" /><input type="button" value="Delete" onClick="removeRow(this);" /></td>
-      </tr>
-      <tr>
-        <td><input type="text" name="t1" /></td>
-        <td><input type="text" name="t2" /></td>
-        <td><input type="text" name="t3" /><input type="button" value="Delete" onClick="removeRow(this);" /></td>
-      </tr>
-      <tr>
-        <td><input type="text" name="t1" /></td>
-        <td><input type="text" name="t2" /></td>
-        <td><input type="text" name="t3" /><input type="button" value="Delete" onClick="removeRow(this);" /></td>
-      </tr>
+                                                          
+
+    <table id="inventory" class="display" aria-describedby="tbldesc">
+      <thead>
+        <tr><th>Owner</th><th>Manufacturer</th><th>Model</th><th>IP Address</th><th>Serial</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+        <#list assets?chunk(6) as row>
+        <tr>
+          <#list row as cell>
+            <td>${cell}</td>
+          </#list>
+        </tr>
+        </#list>
+      </tbody>
     </table>
-    <hr>
-    <input type="button" value="Add Row" onClick="addRow();" />
-                         
-                        
-                        </div>
+    
 
+    
 
-
-
-                        
+                       
                         </div>
                       </div>
                     </div>
