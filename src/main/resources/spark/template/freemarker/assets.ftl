@@ -9,6 +9,7 @@
     <title>Wicked Inventory</title>
 
     <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/main.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -84,7 +85,7 @@
                     <a href="assets"><i class="fa fa-diamond"></i> <span class="nav-label">Assets</span></a>
                 </li>
                 <li>
-                    <a href="reports.html"><i class="fa fa-bar-chart-o"></i>Reports<span class="nav label"></span></a>
+                    <a href="reports"><i class="fa fa-bar-chart-o"></i>Reports<span class="nav label"></span></a>
                 </li>
                 <li>
                     <a href="users"><i class="fa fa-envelope"></i>Users</a>

@@ -8,14 +8,26 @@
 
     <title>Wicked Inventory</title>
 
-    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
-    <link href="stylesheets/font-awesome.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet">
+
 
     <!-- Morris -->
-    <link href="stylesheets/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
 
-    <link href="stylesheets/animate.css" rel="stylesheet">
-    <link href="stylesheets/style.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Javascript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+
+
+
+    <script type="text/javascript" src="js/report-loader.js"></script>
+	<script type="text/javascript" src="js/dynamic-table.js"></script>
+
 
 </head>
 
@@ -35,13 +47,41 @@
                 </li>
                 <li class="active">
                     
+
+
+<!-- Daily Notifications for Tasks to Complete Every Week -->
+<#assign aDateTime = .now>
+<#assign day = aDateTime?string["EEEE"]>
+
+<#if day == "Monday">
+<div class="notification">Monday Task: Generate Printer Report for Managers</div>
+
+<#elseif day == "Tuesday">
+<div class="notification">Tuesday Task: Generate Desktop Report</div>
+
+<#elseif day == "Wednesday">
+<div class="notification">Wednesday Task: Generate Laptop Report for Clinics</div>
+
+<#elseif day == "Thursday">
+<div class="notification">Thursday Task: Review All Reports</div>
+
+<#elseif day == "Friday">
+<div class="notification">Friday Task: Buy Lunch for Everyone</div>
+
+<#else>
+<div class="notification">Why are you working on the weekend?!</div>
+
+</#if>
+<br>
+
+
                     <li>
                     <a href="dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
                 </li>
                     
                    
                 <li>
-                    <a href="assets"><i class="fa fa-diamond"></i> <span class="nav-label">Assets</span></a>
+                    <a href="assets"><i class="fa fa-diamond"></i> <span class="nav-label">Reports</span></a>
                 </li>
                 <li>
                     <a href="reports"><i class="fa fa-bar-chart-o"></i>Reports<span class="nav label"></span></a>
@@ -62,44 +102,26 @@
               <ul class="dropdown-menu dropdown-alerts">
                   <li>
                         <a href="mailbox.html">
-                            <div>
-                                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
+
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a href="profile.html">
-                            <div>
-                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                <span class="pull-right text-muted small">12 minutes ago</span>
-                            </div>
+
                         </a>
                     </li>
                     <li class="divider"></li>
-                    <li>
-                        <a href="grid_options.html">
-                            <div>
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
+
                     <li class="divider"></li>
                     <li>
-                        <div class="text-center link-block">
-                            <a href="notifications.html">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </div>
+
                     </li>
                 </ul>
               </li>
 
 
-                <li class="views-number">DASHBOARD</li>
+                <li class="views-number">REPORTS</li>
                 <li><a href="index.html"> <i class="fa fa-sign-out"></i>Logout</a></li>
             </ul>
 
@@ -109,33 +131,55 @@
 
         <div class="wrapper wrapper-content">
         <div class="row"></div>
+        <div class="row"></div>
+
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-12">
             <div class="ibox float-e-margins">
               <div class="ibox-title">
-                <h5>System Status</h5>
-              </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <p>Welcome to Wicked Inventory. It's a never ending process and we're here to help you get it done.</p>
+                <div class="ibox-tools">
+                  <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                      <div class="ibox-title">
+                        <h5>USERS</h5>
+                      </div>
+                      <div class="ibox-content">
+                        <div class="row"></div>
+                        <div class="table-responsive">
+                        
+                        
+                        
+    <table id="inventory" class="display" aria-describedby="tbldesc">
+      <thead>
+        <tr><th>Report</th><th>Type</th><th>Frequency</th>
+      </thead>
+      <tbody>
+        <#list reports?chunk(6) as row>
+        <tr>
+          <#list row as cell>
+            <td>${cell}</td>
+          </#list>
+        </tr>
+        </#list>
+      </tbody>
+    </table>
+    
+    
+
+
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="ibox-content">
-                <div class="row">Please choose the appropriate action from the menu on the left.</div>
-              </div>
-              <div class="ibox-content">
-                <div class="row"></div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="row"></div>
-
-        </div>
-     
-        </div>
-    </div>
+       </div>
+      </div>
+     </div>
 
 <!-- Mainly scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
@@ -144,7 +188,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity		="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <!-- jQuery UI -->
-<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.js"></script>
 
 </body>
 </html>

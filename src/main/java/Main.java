@@ -116,9 +116,67 @@ public class Main {
     }, new FreeMarkerEngine()
     ); 
 
+Gson gson = new Gson();
+
+get("/users", (req, res) -> {
+      List<Object> data = new ArrayList<>();
+      Connection connection = null;
+      try {
+        connection = DatabaseUrl.extract().getConnection();
+        Statement stmt = connection.createStatement();
+
+        ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+
+        while (rs.next()) {
+          Map<String, Object> user = new HashMap<>();
+          
+          user.put("name", rs.getString("name"));
+          user.put("role", rs.getString("role"));
+          user.put("email", rs.getString("email"));
+          data.add(user);        
+        }
+      } catch (Exception e) {
+        data.add("There was an error: " + e);
+      } finally {
+        if (connection != null)
+          try {
+            connection.close();
+          } catch (SQLException e) {
+          }
+      }
+      return data;
+    }, gson::toJson);
 
 
+post("/reports", (req, res) -> {
+      List<Object> data = new ArrayList<>();
+      Connection connection = null;
+      try {
+        connection = DatabaseUrl.extract().getConnection();
+        Statement stmt = connection.createStatement();
+        JSONObject obj = new JSONObject(req.body());
+        String reports = obj.getString("report");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM reports where report ='" + reports + "'");
 
+        while (rs.next()) {
+          Map<String, Object> report = new HashMap<>();
+          
+          report.put("report", rs.getString("report"));
+          report.put("type", rs.getString("type"));
+          report.put("frequency", rs.getString("frequency"));
+          data.add(report);        
+        }
+      } catch (Exception e) {
+        data.add("There was an error: " + e);
+      } finally {
+        if (connection != null)
+          try {
+            connection.close();
+          } catch (SQLException e) {
+          }
+      }
+      return data;
+    }, gson::toJson);
 
 
   }

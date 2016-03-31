@@ -84,7 +84,7 @@
                     <a href="assets"><i class="fa fa-diamond"></i> <span class="nav-label">Assets</span></a>
                 </li>
                 <li>
-                    <a href="reports.html"><i class="fa fa-bar-chart-o"></i>Reports<span class="nav label"></span></a>
+                    <a href="reports"><i class="fa fa-bar-chart-o"></i>Reports<span class="nav label"></span></a>
                 </li>
                 <li>
                     <a href="users"><i class="fa fa-envelope"></i>Users</a>
@@ -154,7 +154,7 @@
         <tr><th>Name</th><th>Role</th><th>Email</th>
       </thead>
       <tbody>
-        <#list results?chunk(6) as row>
+        <#list users?chunk(6) as row>
         <tr>
           <#list row as cell>
             <td>${cell}</td>
@@ -165,17 +165,6 @@
     </table>
     
     
-    <!-- Make table Dynamic using DataTables -->
-    <script>
-    $(document).ready(function() {
-    $('#inventory').DataTable()
-    });
-  </script>
-
-
-
-
-
 
 
                         
